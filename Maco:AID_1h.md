@@ -1,11 +1,12 @@
-FOR WT_1h versus ST7_1h
-Exclude all the samples that are not needed
-
-sample_files_ST7_1h = sample_files[c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)] count_data_ST7_1h <- tximport(files = sample_files_ST7_1h,type = "kallisto",tx2gene = gene_map, ignoreAfterBar = TRUE) count_data_ST7_1h[['counts']]
+# FOR WT_1h versus ST7_1h
+# Exclude all the samples that are not needed
+```R
+sample_files_ST7_1h = sample_files[c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)] 
+count_data_ST7_1h <- tximport(files = sample_files_ST7_1h,type = "kallisto",tx2gene = gene_map, ignoreAfterBar = TRUE) count_data_ST7_1h[['counts']]
 specify what samples are control
 
 sample_table_ST7_1h = read.csv("Info_samples_DEseq2_ST7_1h.csv", sep=";") conditions = sample_table_ST7_1h[,3] conditions = factor(conditions, levels = c('WT_1h', 'ST7:AID_1h')) sample_table_ST7_1h$conditions = conditions
-
+```
 deseq_dataset_ST7_1h = DESeqDataSetFromTximport(txi = count_data_ST7_1h, colData = sample_table_ST7_1h, design = ~conditions)
 estimate size factors (normalizatiion)
 
