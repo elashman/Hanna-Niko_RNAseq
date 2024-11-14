@@ -1,27 +1,69 @@
-# FOR WT_1h versus ST7_1h
+# FOR WT_1h versus maco1_1h
 # Exclude all the samples that are not needed
+
 ```R
-sample_files_ST7_1h = sample_files[c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)] 
-count_data_ST7_1h <- tximport(files = sample_files_ST7_1h,type = "kallisto",tx2gene = gene_map, ignoreAfterBar = TRUE) count_data_ST7_1h[['counts']]
-specify what samples are control
+library(dplyr)
+library(tximport)
+library(DESeq2)
+library(rhdf5)
+library(ggplot2)
+library(plotly)
+library(tibble)
+library(biomaRt)
 
-sample_table_ST7_1h = read.csv("Info_samples_DEseq2_ST7_1h.csv", sep=";") conditions = sample_table_ST7_1h[,3] conditions = factor(conditions, levels = c('WT_1h', 'ST7:AID_1h')) sample_table_ST7_1h$conditions = conditions
+gene_map <- read.csv ("map_genes_2.csv")
+
+sample_table = read.csv("Info_samples_DEseq2.csv", sep=";")
+sample_table_maco1_1h = sample_table[c(1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18), ] 
+sample_files = paste0("./kallistoKatya/", pull(sample_table, "Sample") , ".1/abundance.h5")
+names(sample_files) = pull(sample_table, "Sample")
+names(sample_files)
+
+sample_files_maco1_1h = sample_files[c(1, 2, 3, 4, 5, 6, 13, 14, 15, 16, 17, 18)]
+count_data_maco1_1h <- tximport(files = sample_files_maco1_1h,type = "kallisto",tx2gene = gene_map, ignoreAfterBar = TRUE)
+count_data_maco1_1h[['counts']]
 ```
-deseq_dataset_ST7_1h = DESeqDataSetFromTximport(txi = count_data_ST7_1h, colData = sample_table_ST7_1h, design = ~conditions)
-estimate size factors (normalizatiion)
 
-deseq_dataset_ST7_1h = estimateSizeFactors(deseq_dataset_ST7_1h) normalizationFactors(deseq_dataset_ST7_1h) counts(deseq_dataset_ST7_1h, normalized=TRUE)
-estimate dispersions
+# specify what samples are control
+```R
+conditions = sample_table_maco1_1h[,3]
+conditions = factor(conditions, levels = c('WT_1h', 'MACO-1:AID_1h'))
+sample_table_maco1_1h$conditions = conditions
 
-deseq_dataset_ST7_1h = estimateDispersions(deseq_dataset_ST7_1h) plotDispEsts(deseq_dataset_ST7_1h)
-Run statistics
+deseq_dataset_maco1_1h = DESeqDataSetFromTximport(txi = count_data_maco1_1h, colData = sample_table_maco1_1h, design = ~conditions)
+```
+# estimate size factors (normalizatiion)
 
-deseq_dataset_ST7_1h = nbinomWaldTest(deseq_dataset_ST7_1h) result_table_ST7_1h = results(deseq_dataset_ST7_1h) summary(result_table_ST7_1h)
+```R
+deseq_dataset_maco1_1h = estimateSizeFactors(deseq_dataset_maco1_1h)
+normalizationFactors(deseq_dataset_maco1_1h)
+counts(deseq_dataset_maco1_1h, normalized=TRUE)
+```
 
-Result: out of 18854 with nonzero total read count adjusted p-value < 0.1 LFC > 0 (up) : 608, 3.2% LFC < 0 (down) : 428, 2.3% outliers [1] : 7, 0.037% low counts [2] : 4704, 25% (mean count < 9)
-MA plot
+# estimate dispersions
 
-plotMA(result_table_ST7_1h)
+```R
+deseq_dataset_maco1_1h = estimateDispersions(deseq_dataset_maco1_1h)
+plotDispEsts(deseq_dataset_maco1_1h)
+```
+# Run statistics
+
+deseq_dataset_maco1_1h = nbinomWaldTest(deseq_dataset_maco1_1h) 
+result_table_maco1_1h = results(deseq_dataset_maco1_1h) 
+summary(result_table_maco1_1h)
+
+out of 18929 with nonzero total read count
+adjusted p-value < 0.1
+LFC > 0 (up)       : 1823, 9.6%
+LFC < 0 (down)     : 2182, 12%
+outliers [1]       : 50, 0.26%
+low counts [2]     : 2546, 13%
+(mean count < 1)
+
+
+# MA plot
+
+plotMA(result_table_maco1_1h)
 Make results to data.frame
 
 result_df_ST7_1h = as.data.frame(result_table_ST7_1h)
