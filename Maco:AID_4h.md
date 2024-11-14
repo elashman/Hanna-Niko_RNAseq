@@ -76,7 +76,7 @@ sum(complete.cases(result_df_maco1_4h))
 filter_df_maco1_4h = result_df_maco1_1h[complete.cases(result_df_maco1_4h),]
 View(filter_df_maco1_4h)
 ```
-# in filter_df_maco1_1h 15035 genes
+# in filter_df_maco1_4h 15035 genes
 
 # padj < 0.05
 
@@ -84,7 +84,7 @@ View(filter_df_maco1_4h)
 filter_df_maco1_4h$padj < 0.05
 filter_df2_maco1_4h = filter_df_maco1_4h[filter_df_maco1_4h$padj < 0.05, ]
 ```
-# in filter_df2_maco1_1h 3257 genes
+# in filter_df2_maco1_4h 3257 genes
 
 # log2FoldChange >1 <-1
 ```R
@@ -92,7 +92,7 @@ abs(filter_df2_maco1_4h$log2FoldChange) > 1
 filter_df3_maco1_4h = filter_df2_maco1_4h[abs(filter_df2_maco1_4h$log2FoldChange) > 1, ]
 View(filter_df3_maco1_4h)
 ```
-# in filter_df3_maco1_1h 1136 genes
+# in filter_df3_maco1_4h 1136 genes
 
 
 # Assign gene names
