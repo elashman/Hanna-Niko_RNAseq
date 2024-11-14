@@ -114,4 +114,14 @@ filter_df3_maco1_4h = rownames_to_column(filter_df3_maco1_4h, var = "ensgene")
 annotation_filter_df3_maco1_4h = getBM (attributes=c("ensembl_gene_id", "chromosome_name", "start_position", "end_position", "strand", "gene_biotype", "external_gene_name", "description"), filters = c("ensembl_gene_id"), values = filter_df3_maco1_4h$ensgene, mart = ensembl_110)
 annotated_df3_maco1_4h = left_join(filter_df3_maco1_4h, annotation_filter_df3_maco1_4h, by = c("ensgene" = "ensembl_gene_id"))
 
-write_tsv(annotated_df3_maco1_1h, "annotated_df3_maco1_1h")
+write_tsv(annotated_df3_maco1_4h, "annotated_df3_maco1_4h")
+
+# Common genes for maco-1 between 1h and 4h
+
+genes_maco1_1h = annotated_df3_maco1_1h$ensgene
+genes_maco1_4h = annotated_df3_maco1_4h$ensgene
+common_genes_maco1_1h_4h = intersect(genes_maco1_1h, genes_maco1_4h)
+list_common_genes_maco1_1h_4h = annotated_df3_maco1_4h[annotated_df3_maco1_4h$ensgene %in% common_genes_maco1_1h_4h,]
+
+write_tsv(list_common_genes_maco1_1h_4h, "list_common_genes_maco1_1h_4h")
+
