@@ -38,6 +38,9 @@ deseq_dataset_maco1_4h = DESeqDataSetFromTximport(txi = count_data_maco1_4h, col
 deseq_dataset_maco1_4h = estimateSizeFactors(deseq_dataset_maco1_4h)
 normalizationFactors(deseq_dataset_maco1_4h)
 counts(deseq_dataset_maco1_4h, normalized=TRUE)
+
+vst = varianceStabilizingTransformation(deseq_dataset_maco1_4h)
+plotPCA(vst, intgroup='conditions') + geom_label(aes(label=name))
 ```
 
 # estimate dispersions
@@ -73,7 +76,7 @@ result_df_maco1_4h = as.data.frame(result_table_maco1_4h)
 
 sum(complete.cases(result_df_maco1_4h))
 
-filter_df_maco1_4h = result_df_maco1_1h[complete.cases(result_df_maco1_4h),]
+filter_df_maco1_4h = result_df_maco1_4h[complete.cases(result_df_maco1_4h),]
 View(filter_df_maco1_4h)
 ```
 # in filter_df_maco1_4h 15035 genes
@@ -84,7 +87,7 @@ View(filter_df_maco1_4h)
 filter_df_maco1_4h$padj < 0.05
 filter_df2_maco1_4h = filter_df_maco1_4h[filter_df_maco1_4h$padj < 0.05, ]
 ```
-# in filter_df2_maco1_4h 3257 genes
+# in filter_df2_maco1_4h 1633 genes
 
 # log2FoldChange >1 <-1
 ```R
@@ -92,7 +95,7 @@ abs(filter_df2_maco1_4h$log2FoldChange) > 1
 filter_df3_maco1_4h = filter_df2_maco1_4h[abs(filter_df2_maco1_4h$log2FoldChange) > 1, ]
 View(filter_df3_maco1_4h)
 ```
-# in filter_df3_maco1_4h 1136 genes
+# in filter_df3_maco1_4h 505 genes
 
 
 # Assign gene names
@@ -118,10 +121,16 @@ write_tsv(annotated_df3_maco1_4h, "annotated_df3_maco1_4h")
 
 # Common genes for maco-1 between 1h and 4h
 
+annotated_df3_maco1_1h <- read.csv("/Users/elashman/Documents/Niko_Hanna_RNASeq_13Nov24/annotated_df3_maco1_1h.csv", sep="\t")
 genes_maco1_1h = annotated_df3_maco1_1h$ensgene
 genes_maco1_4h = annotated_df3_maco1_4h$ensgene
 common_genes_maco1_1h_4h = intersect(genes_maco1_1h, genes_maco1_4h)
-list_common_genes_maco1_1h_4h = annotated_df3_maco1_4h[annotated_df3_maco1_4h$ensgene %in% common_genes_maco1_1h_4h,]
 
-write_tsv(list_common_genes_maco1_1h_4h, "list_common_genes_maco1_1h_4h")
+list_common_genes_maco1_1h = annotated_df3_maco1_1h[annotated_df3_maco1_1h$ensgene %in% common_genes_maco1_1h_4h, c('ensgene','log2FoldChange', 'padj')]
+list_common_genes_maco1_4h = annotated_df3_maco1_4h[annotated_df3_maco1_4h$ensgene %in% common_genes_maco1_1h_4h, c('ensgene','log2FoldChange', 'padj', 'external_gene_name', 'description')]
 
+colnames(list_common_genes_maco1_1h)[2] = "log2FoldChange_1h"
+colnames(list_common_genes_maco1_4h)[2] = "log2FoldChange_4h"
+colnames(list_common_genes_maco1_1h)[3] = "padj_1h"
+colnames(list_common_genes_maco1_4h)[3] = "padj_4h"
+List_common_genes_maco1_padj_FoldChange = left_join(list_common_genes_maco1_1h, list_common_genes_maco1_4h, by = c("ensgene" = "ensgene")) 
