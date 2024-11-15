@@ -38,6 +38,9 @@ deseq_dataset_maco1_1h = DESeqDataSetFromTximport(txi = count_data_maco1_1h, col
 deseq_dataset_maco1_1h = estimateSizeFactors(deseq_dataset_maco1_1h)
 normalizationFactors(deseq_dataset_maco1_1h)
 counts(deseq_dataset_maco1_1h, normalized=TRUE)
+
+vst = varianceStabilizingTransformation(deseq_dataset_maco1_1h)
+plotPCA(vst, intgroup='conditions') + geom_label(aes(label=name))
 ```
 
 # estimate dispersions
