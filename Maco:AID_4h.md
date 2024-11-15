@@ -118,9 +118,10 @@ annotation_filter_df3_maco1_4h = getBM (attributes=c("ensembl_gene_id", "chromos
 annotated_df3_maco1_4h = left_join(filter_df3_maco1_4h, annotation_filter_df3_maco1_4h, by = c("ensgene" = "ensembl_gene_id"))
 
 write_tsv(annotated_df3_maco1_4h, "annotated_df3_maco1_4h")
+```
 
 # Common genes for maco-1 between 1h and 4h
-
+```R
 annotated_df3_maco1_1h <- read.csv("/Users/elashman/Documents/Niko_Hanna_RNASeq_13Nov24/annotated_df3_maco1_1h.csv", sep="\t")
 genes_maco1_1h = annotated_df3_maco1_1h$ensgene
 genes_maco1_4h = annotated_df3_maco1_4h$ensgene
@@ -135,3 +136,4 @@ colnames(list_common_genes_maco1_1h)[3] = "padj_1h"
 colnames(list_common_genes_maco1_4h)[3] = "padj_4h"
 List_common_genes_maco1_padj_FoldChange = left_join(list_common_genes_maco1_1h, list_common_genes_maco1_4h, by = c("ensgene" = "ensgene")) 
 write_tsv(List_common_genes_maco1_padj_FoldChange, "List_common_genes_maco1_padj_FoldChange")
+```
