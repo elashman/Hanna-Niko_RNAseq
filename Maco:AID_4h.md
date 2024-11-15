@@ -134,3 +134,4 @@ colnames(list_common_genes_maco1_4h)[2] = "log2FoldChange_4h"
 colnames(list_common_genes_maco1_1h)[3] = "padj_1h"
 colnames(list_common_genes_maco1_4h)[3] = "padj_4h"
 List_common_genes_maco1_padj_FoldChange = left_join(list_common_genes_maco1_1h, list_common_genes_maco1_4h, by = c("ensgene" = "ensgene")) 
+write_tsv(List_common_genes_maco1_padj_FoldChange, "List_common_genes_maco1_padj_FoldChange")
