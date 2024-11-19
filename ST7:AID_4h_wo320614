@@ -18,12 +18,12 @@ library(biomaRt)
 gene_map <- read.csv ("map_genes_2.csv")
 
 sample_table = read.csv("Info_samples_DEseq2.csv", sep=";")
-sample_table_ST7_4h = sample_table[c(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30), ] 
+sample_table_ST7_4h = sample_table[c(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29), ] 
 sample_files = paste0("./kallistoKatya/", pull(sample_table, "Sample") , ".1/abundance.h5")
 names(sample_files) = pull(sample_table, "Sample")
 names(sample_files)
 
-sample_files_ST7_4h = sample_files[c(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30)]
+sample_files_ST7_4h = sample_files[c(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29)]
 count_data_ST7_4h <- tximport(files = sample_files_ST7_4h,type = "kallisto",tx2gene = gene_map, ignoreAfterBar = TRUE)
 count_data_ST7_4h[['counts']]
 ```
