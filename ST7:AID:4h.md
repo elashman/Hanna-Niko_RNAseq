@@ -89,7 +89,7 @@ sum(complete.cases(result_df_ST7_4h))
 filter_df_ST7_4h = result_df_ST7_4h[complete.cases(result_df_ST7_4h),]
 View(filter_df_ST7_4h)
 ```
-
+# number of genes 14784
 
 # padj < 0.05
 
@@ -97,7 +97,7 @@ View(filter_df_ST7_4h)
 filter_df_ST7_4h$padj < 0.05
 filter_df2_ST7_4h = filter_df_ST7_4h[filter_df_ST7_4h$padj < 0.05, ]
 ```
-
+# number of genes 648
 
 # log2FoldChange >1 <-1
 ```R
@@ -106,7 +106,7 @@ filter_df3_ST7_4h = filter_df2_ST7_4h[abs(filter_df2_ST7_4h$log2FoldChange) > 1,
 View(filter_df3_ST7_4h)
 ```
 
-
+# number of genes 258
 
 # Assign gene names
 
