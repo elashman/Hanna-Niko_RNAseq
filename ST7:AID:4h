@@ -1,6 +1,6 @@
 # FOR WT_1h versus ST7_4h
 
-setwd("/Users/elashman/Documents/NikoHanna_RNASeq")
+setwd("/Users/elashman/Documents/Niko_Hanna_RNASeq_13Nov24")
 
 # Exclude all the samples that are not needed
 
