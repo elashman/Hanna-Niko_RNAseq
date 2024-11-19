@@ -55,6 +55,8 @@ plot(h)
 
 
 
+
+
 # Check if 320614 (St7:AID_4h) is clustering with MAco1:AID_4h
 
 
@@ -95,4 +97,6 @@ d = dist(d)
 h = hclust(d) 
 plot(h)
 ```
+
+
 
