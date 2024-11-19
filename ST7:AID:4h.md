@@ -65,13 +65,13 @@ deseq_dataset_ST7_4h = nbinomWaldTest(deseq_dataset_ST7_4h)
 result_table_ST7_4h = results(deseq_dataset_ST7_4h) 
 summary(result_table_ST7_4h)
 ```
-out of 18618 with nonzero total read count
+out of 18830 with nonzero total read count
 adjusted p-value < 0.1
-LFC > 0 (up)       : 955, 5.1%
-LFC < 0 (down)     : 1176, 6.3%
-outliers [1]       : 19, 0.1%
-low counts [2]     : 3564, 19%
-(mean count < 3)
+LFC > 0 (up)       : 868, 4.6%
+LFC < 0 (down)     : 274, 1.5%
+outliers [1]       : 107, 0.57%
+low counts [2]     : 3939, 21%
+(mean count < 4)
 
 
 # MA plot
