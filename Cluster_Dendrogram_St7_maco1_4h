@@ -1,1 +1,98 @@
+# FOR WT_1h versus ST7_4h
+
+setwd("/Users/elashman/Documents/Niko_Hanna_RNASeq_13Nov24")
+
+# Exclude all the samples that are not needed
+
+```R
+library(dplyr)
+library(tximport)
+library(DESeq2)
+library(rhdf5)
+library(ggplot2)
+library(plotly)
+library(tibble)
+library(biomaRt)
+
+
+gene_map <- read.csv ("map_genes_2.csv")
+
+sample_table = read.csv("Info_samples_DEseq2.csv", sep=";")
+sample_table_4h = sample_table[c(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36), ] 
+sample_files = paste0("./kallistoKatya/", pull(sample_table, "Sample") , ".1/abundance.h5")
+names(sample_files) = pull(sample_table, "Sample")
+names(sample_files)
+
+sample_files_4h = sample_files[c(19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36)]
+count_data_4h <- tximport(files = sample_files_4h,type = "kallisto",tx2gene = gene_map, ignoreAfterBar = TRUE)
+count_data_4h[['counts']]
+```
+
+# specify what samples are control
+```R
+conditions = sample_table_4h[,3]
+conditions = factor(conditions, levels = c('WT_4h', 'ST7:AID_4h', 'MACO-1:AID_4h'))
+sample_table_4h$conditions = conditions
+
+deseq_dataset_4h = DESeqDataSetFromTximport(txi = count_data_4h, colData = sample_table_4h, design = ~conditions)
+```
+# estimate size factors (normalizatiion)
+
+```R
+deseq_dataset_4h = estimateSizeFactors(deseq_dataset_4h)
+normalizationFactors(deseq_dataset_4h)
+counts(deseq_dataset_4h, normalized=TRUE)
+
+vst_4h = varianceStabilizingTransformation(deseq_dataset_4h)
+plotPCA(vst_4h, intgroup='conditions') + geom_label(aes(label=name))
+
+d = assay(vst_4h) 
+d = t(d) 
+d = dist(d) 
+h = hclust(d) 
+plot(h)
+```
+
+
+
+# Check if 320614 (St7:AID_4h) is clustering with MAco1:AID_4h
+
+
+gene_map <- read.csv ("map_genes_2.csv")
+
+sample_table = read.csv("Info_samples_DEseq2.csv", sep=";")
+sample_table_test_maco1 = sample_table[c(19, 20, 21, 22, 23, 24, 30, 31, 32, 33, 34, 35, 36), ] 
+sample_files = paste0("./kallistoKatya/", pull(sample_table, "Sample") , ".1/abundance.h5")
+names(sample_files) = pull(sample_table, "Sample")
+names(sample_files)
+
+sample_files_test_maco1 = sample_files[c(19, 20, 21, 22, 23, 24, 30, 31, 32, 33, 34, 35, 36)]
+count_data_test_maco1 <- tximport(files = sample_files_test_maco1,type = "kallisto",tx2gene = gene_map, ignoreAfterBar = TRUE)
+count_data_test_maco1[['counts']]
+```
+
+# specify what samples are control
+```R
+conditions = sample_table_test_maco1[,3]
+conditions = factor(conditions, levels = c('WT_4h', 'ST7:AID_4h', 'MACO-1:AID_4h'))
+sample_table_test_maco1$conditions = conditions
+
+deseq_dataset_test_maco1 = DESeqDataSetFromTximport(txi = count_data_test_maco1, colData = sample_table_test_maco1, design = ~conditions)
+```
+# estimate size factors (normalizatiion)
+
+```R
+deseq_dataset_test_maco1 = estimateSizeFactors(deseq_dataset_test_maco1)
+normalizationFactors(deseq_dataset_test_maco1)
+counts(deseq_dataset_test_maco1, normalized=TRUE)
+
+vst_test_maco1 = varianceStabilizingTransformation(deseq_dataset_test_maco1)
+plotPCA(vst_test_maco1, intgroup='conditions') + geom_label(aes(label=name))
+
+d = assay(vst_test_maco1) 
+d = t(d) 
+d = dist(d) 
+h = hclust(d) 
+plot(h)
+```
 
