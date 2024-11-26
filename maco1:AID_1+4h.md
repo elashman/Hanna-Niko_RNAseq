@@ -136,6 +136,21 @@ annotated_df3_maco1 = left_join(filter_df3_maco1, annotation_filter_df3_maco1, b
 
 write_tsv(annotated_df3_maco1, "annotated_df3_maco1_1+4h")
 ```
+# Common genes for ST7(1+4h) and maco-1(1+4h) 
+```R
+annotated_df3_ST7 <- read.csv("/Users/elashman/Documents/Niko_Hanna_RNASeq_13Nov24/annotated_df3_ST7_1+4h", sep="\t")
+genes_ST7 = annotated_df3_ST7$ensgene
+genes_maco1 = annotated_df3_maco1$ensgene
+common_genes_ST7_maco1 = intersect(genes_ST7, genes_maco1)
 
+list_common_genes_ST7 = annotated_df3_ST7[annotated_df3_ST7$ensgene %in% common_genes_ST7_maco1, c('ensgene','log2FoldChange', 'padj')]
+list_common_genes_maco1 = annotated_df3_maco1[annotated_df3_maco1$ensgene %in% common_genes_ST7_maco1, c('ensgene','log2FoldChange', 'padj', 'external_gene_name', 'description')]
 
-
+colnames(list_common_genes_ST7)[2] = "log2FoldChange_ST7"
+colnames(list_common_genes_maco1)[2] = "log2FoldChange_maco1"
+colnames(list_common_genes_ST7)[3] = "padj_ST7"
+colnames(list_common_genes_maco1)[3] = "padj_maco1"
+List_common_genes_ST7_maco1 = left_join(list_common_genes_ST7, list_common_genes_maco1, by = c("ensgene" = "ensgene")) 
+write_tsv(List_common_genes_ST7_maco1, "List_common_genes_ST7_maco1_1+4h")
+```
+# 74 genes in common, 10 are GPCRs
