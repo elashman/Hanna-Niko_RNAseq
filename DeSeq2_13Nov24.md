@@ -88,7 +88,6 @@ deseq_dataset_ST7_1h = nbinomWaldTest(deseq_dataset_ST7_1h)
 result_table_ST7_1h = results(deseq_dataset_ST7_1h) 
 summary(result_table_ST7_1h)
 ```
-```
 **Result:**
 out of 18854 with nonzero total read count
 adjusted p-value < 0.1
