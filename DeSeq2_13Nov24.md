@@ -128,9 +128,9 @@ abs(filter_df2_ST7_1h$log2FoldChange) > 1
 filter_df3_ST7_1h = filter_df2_ST7_1h[abs(filter_df2_ST7_1h$log2FoldChange) > 1, ] 
 View(filter_df3_ST7_1h)
 ```
-```
-Result: in filter_df3_ST7_1h 120 genes
-```
+
+**Result:** in filter_df3_ST7_1h 120 genes
+
 
 # Assign gene names
 ```r
