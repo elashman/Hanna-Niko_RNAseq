@@ -4,6 +4,7 @@
 
 # load libraries in RStudio
 
+```r
 library(dplyr) 
 library(tximport) 
 library(DESeq2) 
@@ -14,6 +15,7 @@ library(tibble)
 library(biomaRt)
 
 gene_map <- read.csv ("map_genes_2.csv")
+```
 
 # Copy files
 
