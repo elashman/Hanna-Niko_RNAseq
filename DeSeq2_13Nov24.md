@@ -89,12 +89,12 @@ result_table_ST7_1h = results(deseq_dataset_ST7_1h)
 summary(result_table_ST7_1h)
 ```
 **Result:**
-out of 18854 with nonzero total read count
-adjusted p-value < 0.1
-LFC > 0 (up)       : 608, 3.2%
-LFC < 0 (down)     : 428, 2.3%
-outliers [1]       : 7, 0.037%
-low counts [2]     : 4704, 25%
+out of 18854 with nonzero total read count<br>
+adjusted p-value < 0.1<br>
+LFC > 0 (up)       : 608, 3.2%<br>
+LFC < 0 (down)     : 428, 2.3%<br>
+outliers [1]       : 7, 0.037%<br>
+low counts [2]     : 4704, 25%<br>
 (mean count < 9)
 
 # MA plot
