@@ -89,7 +89,7 @@ result_table_ST7_1h = results(deseq_dataset_ST7_1h)
 summary(result_table_ST7_1h)
 ```
 ```
-Result:
+**Result:**
 out of 18854 with nonzero total read count
 adjusted p-value < 0.1
 LFC > 0 (up)       : 608, 3.2%
@@ -97,7 +97,7 @@ LFC < 0 (down)     : 428, 2.3%
 outliers [1]       : 7, 0.037%
 low counts [2]     : 4704, 25%
 (mean count < 9)
-```
+
 # MA plot
 ```r
 plotMA(result_table_ST7_1h)
@@ -119,9 +119,9 @@ Result: in filter_df_ST7_1h 14143 genes
 filter_df_ST7_1h$padj < 0.05
 filter_df2_ST7_1h = filter_df_ST7_1h[filter_df_ST7_1h$padj < 0.05, ]
 ```
-```
-Result: in filter_df2_ST7_1h 579 genes
-```
+
+**Result:** in filter_df2_ST7_1h 579 genes
+
 # log2FoldChange >1 <-1
 ```r
 abs(filter_df2_ST7_1h$log2FoldChange) > 1 
