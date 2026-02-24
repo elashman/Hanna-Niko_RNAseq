@@ -21,7 +21,7 @@
 
 # load libraries in RStudio
 
-***
+```bash
 library(dplyr)
 library(tximport)
 library(DESeq2)
@@ -33,5 +33,7 @@ library(biomaRt)
 
 gene_map <- read.csv ("map_genes_2.csv")
 
-***
+```
+
+
 
