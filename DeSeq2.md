@@ -1,4 +1,4 @@
-# The samples overview - 
+# The samples overview - TrapSeq!!! RMG experimant from Hanna and Niko 
 
 # TRAP elution
 
